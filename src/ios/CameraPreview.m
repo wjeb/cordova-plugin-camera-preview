@@ -462,7 +462,7 @@
         CGFloat quality = (CGFloat)[command.arguments[0] floatValue] / 100.0f;
         dispatch_async(self.sessionManager.sessionQueue, ^{
 			
-			GLKView* v = (GLKView*)self.cameraRenderController.view;
+			GLKView *v = (GLKView*)self.cameraRenderController.view;
 			
 			UIImage *image = [v snapshot];
 			
