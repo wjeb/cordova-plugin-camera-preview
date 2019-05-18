@@ -467,7 +467,10 @@
 			UIImage *image = [v snapshot];
 			
 			NSMutableArray *params = [[NSMutableArray alloc] init];
-			NSString *base64Image = [self getBase64Image:image.CGImage withQuality:quality];
+			
+			CGImageRef imageRef = [image CGImage];
+			
+			NSString *base64Image = [self getBase64Image:imageRef withQuality:quality];
 			
             [params addObject:base64Image];
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:params];
