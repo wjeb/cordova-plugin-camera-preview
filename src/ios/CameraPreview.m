@@ -462,11 +462,12 @@
         CGFloat quality = (CGFloat)[command.arguments[0] floatValue] / 100.0f;
         dispatch_async(self.sessionManager.sessionQueue, ^{
 			
-			UIImage *imageData = ((GLKView*)self.cameraRenderController.view).snapshot;
+			GLKView* v = (GLKView*)self.cameraRenderController.view;
+			
+			UIImage *image = [v snapshot];
 			
 			NSMutableArray *params = [[NSMutableArray alloc] init];
-			NSString *base64Image = [imageData base64Encoding];
-			//NSString *base64Image = [self getBase64Image:imageData.CGImage withQuality:quality];
+			NSString *base64Image = [self getBase64Image:image.CGImage withQuality:quality];
 			
             [params addObject:base64Image];
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:params];
