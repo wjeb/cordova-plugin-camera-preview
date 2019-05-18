@@ -461,7 +461,17 @@
     if (self.cameraRenderController != NULL && self.cameraRenderController.view != NULL) {
         CGFloat quality = (CGFloat)[command.arguments[0] floatValue] / 100.0f;
         dispatch_async(self.sessionManager.sessionQueue, ^{
-            UIImage *image = ((GLKView*)self.cameraRenderController.view).snapshot;
+			
+			GLKView *glView = self.cameraRenderController.view;
+			
+			CGContextRef context = UIGraphicsGetCurrentContext();
+			CGPoint point = glView.frame.origin;
+			[img drawAtPoint:point blendMode:kCGBlendModeNormal alpha:1];
+			UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+			UIGraphicsEndImageContext();
+			
+            //UIImage *image = ((GLKView*)self.cameraRenderController.view).snapshot;
+			
             NSString *base64Image = [self getBase64Image:image.CGImage withQuality:quality];
             NSMutableArray *params = [[NSMutableArray alloc] init];
             [params addObject:base64Image];
